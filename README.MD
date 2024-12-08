@@ -74,6 +74,7 @@ O diagrama de classes abaixo ilustra a relação entre as principais classes do 
 1. Clone ou baixe este repositório.
 2. Certifique-se de que o diagrama `diagrama_de_classes.svg` esteja na raiz do projeto.
 3. Compile e execute a classe principal `MVPInclusaoProduto`:
+
    ```bash
    javac com/mycompany/mvpinclusaoproduto/*.java
    java com.mycompany.mvpinclusaoproduto.MVPInclusaoProduto
