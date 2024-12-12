@@ -19,7 +19,7 @@ public class InclusaoProdutoPresenter {
         this.view.setVisible(false);
 
         configuraView();
-        view.setVisible(true);  
+        view.setVisible(true);
     }
 
     private void configuraView() {
@@ -44,7 +44,6 @@ public class InclusaoProdutoPresenter {
     }
    
     private void salvar() throws Exception{
-        
         String nome = view.getTxtNome().getText();
         if (nome == null || nome.isEmpty()) {
             throw new Exception("Nome do produto é obrigatório");
@@ -60,6 +59,7 @@ public class InclusaoProdutoPresenter {
         produto = new Produto(nome, precoCusto, percentualLucro);
 
         produtos.incluir(produto);
+        produtos.notificarObservadores();
 
         JOptionPane.showMessageDialog(view, "Produto incluído com sucesso!");
 

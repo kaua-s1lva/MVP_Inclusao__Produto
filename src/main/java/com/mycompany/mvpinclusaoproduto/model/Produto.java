@@ -22,6 +22,14 @@ public class Produto {
         return nome;
     }
 
+    public double getPrecoCusto() {
+        return precoCusto;
+    }
+
+    public double getPercentualLucro() {
+        return percentualLucro;
+    }
+
     @Override
     public String toString() {
         return "Produto{" + "nome=" + nome + ", precoCusto=" + precoCusto + ", percentualLucro=" + percentualLucro + ", precoVenda=" + precoVenda + '}';

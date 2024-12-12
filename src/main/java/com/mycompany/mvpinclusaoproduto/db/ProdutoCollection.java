@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Optional;
 
 import com.mycompany.mvpinclusaoproduto.model.Produto;
+import com.mycompany.mvpinclusaoproduto.observer.IObserver;
+import com.mycompany.mvpinclusaoproduto.observer.Observavel;
 
-public class ProdutoCollection {
+public class ProdutoCollection extends Observavel {
     private List<Produto> produtos;
 
     public ProdutoCollection() {
@@ -18,7 +20,25 @@ public class ProdutoCollection {
             throw new IllegalArgumentException("Informe um produto válido");
         }
         produtos.add(produto);
+        notificarObservadores();
     }
+
+    public void remover(Produto produto) {
+        if (produto == null) {
+            throw new IllegalArgumentException("Informe um produto válido");
+        }
+        produtos.remove(produto);
+        notificarObservadores();
+    }
+
+    public void remover(int index) {
+        if (index < 0) {
+            throw new IllegalArgumentException("Selecione um produto");
+        }
+        produtos.remove(index);
+        notificarObservadores();
+    }
+
     public List<Produto> getProdutos() {
         return produtos;
     }
@@ -33,9 +53,24 @@ public class ProdutoCollection {
     }
 
     @Override
+    public void adicionarObservador(IObserver observer) {
+        getObservers().add(observer);
+    }
+
+    @Override
+    public void removerObservador(IObserver observer) {
+        getObservers().remove(observer);
+    }
+
+    @Override
+    public void notificarObservadores() {
+        for (IObserver observer : getObservers()) {
+            observer.atualizar();
+        }
+    }
+
+    @Override
     public String toString() {
         return "ProdutoCollection{" + "produtos=" + produtos.toString() + '}';
     }
-    
-    
 }
