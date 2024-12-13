@@ -52,19 +52,23 @@ public class ProdutoCollection extends Observavel {
         return Optional.empty();
     }
 
+    public int getTotalProdutos() {
+        return produtos.size();
+    }
+
     @Override
     public void adicionarObservador(IObserver observer) {
-        getObservers().add(observer);
+        this.observers.add(observer);
     }
 
     @Override
     public void removerObservador(IObserver observer) {
-        getObservers().remove(observer);
+        this.observers.remove(observer);
     }
 
     @Override
     public void notificarObservadores() {
-        for (IObserver observer : getObservers()) {
+        for (IObserver observer : this.observers) {
             observer.atualizar();
         }
     }

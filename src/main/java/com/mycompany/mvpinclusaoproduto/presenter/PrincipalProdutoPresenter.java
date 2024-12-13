@@ -40,7 +40,7 @@ public class PrincipalProdutoPresenter implements IObserver {
 
     @Override
     public void atualizar() {
-        int quantProdutos = produtos.getProdutos().size();
+        int quantProdutos = produtos.getTotalProdutos();
         view.getLblQuantProdutosCadastrados().setText(Integer.toString(quantProdutos));
     }
 }

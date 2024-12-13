@@ -18,6 +18,7 @@ public class ListagemProdutoView extends javax.swing.JFrame {
      */
     public ListagemProdutoView() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -34,6 +35,7 @@ public class ListagemProdutoView extends javax.swing.JFrame {
         btnRemover = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Listagem de Produto");
 
         tableProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

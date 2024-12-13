@@ -63,7 +63,10 @@ public class InclusaoProdutoPresenter {
 
         JOptionPane.showMessageDialog(view, "Produto incluído com sucesso!");
 
-        System.out.println(produtos.toString());
+        //limpar os inputs
+        view.getTxtNome().setText("");
+        view.getTxtPrecoCusto().setText("");
+        view.getTxtPercentualLucro().setText("");
     }
 
     private void cancelar() {

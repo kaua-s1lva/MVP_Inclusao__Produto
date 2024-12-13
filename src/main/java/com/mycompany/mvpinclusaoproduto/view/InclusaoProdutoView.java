@@ -18,6 +18,7 @@ public class InclusaoProdutoView extends javax.swing.JFrame {
      */
     public InclusaoProdutoView() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -39,6 +40,7 @@ public class InclusaoProdutoView extends javax.swing.JFrame {
         btnIncluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Inclusão de Produto");
 
         lblNome.setText("Nome");
 

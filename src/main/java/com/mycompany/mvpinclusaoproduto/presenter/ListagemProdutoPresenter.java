@@ -31,7 +31,7 @@ public class ListagemProdutoPresenter implements IObserver {
         this.view.getTableProdutos().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent evt) {
-                ativarBotaoRemover();
+                setStatusBotaoRemover(true);
             }
         });
 
@@ -64,8 +64,8 @@ public class ListagemProdutoPresenter implements IObserver {
         }
     }
 
-    private void ativarBotaoRemover() {
-        this.view.getBtnRemover().setEnabled(true);
+    private void setStatusBotaoRemover(boolean status) {
+        this.view.getBtnRemover().setEnabled(status);
     }
 
     @Override
@@ -83,6 +83,6 @@ public class ListagemProdutoPresenter implements IObserver {
                             };
             dtmProdutos.addRow(linha);
         }
-        
+        setStatusBotaoRemover(false);
     }
 }
