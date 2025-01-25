@@ -58,6 +58,9 @@ public class ProdutoCollection extends Observavel {
 
     @Override
     public void adicionarObservador(IObserver observer) {
+        if (this.observers.contains(observer)) {
+            throw new RuntimeException("Não é possível adicionar o mesmo observador");
+        }
         this.observers.add(observer);
     }
 
