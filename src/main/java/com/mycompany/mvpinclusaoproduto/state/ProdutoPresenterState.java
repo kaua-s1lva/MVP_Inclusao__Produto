@@ -1,6 +1,5 @@
 package com.mycompany.mvpinclusaoproduto.state;
 
-import java.awt.List;
 import java.awt.event.ActionListener;
 
 import com.mycompany.mvpinclusaoproduto.presenter.ManterProdutoPresenter;

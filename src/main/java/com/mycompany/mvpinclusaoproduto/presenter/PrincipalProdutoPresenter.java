@@ -78,8 +78,4 @@ public class PrincipalProdutoPresenter implements IObserver {
     private void setStatusBotaoRemover(boolean status) {
         this.view.getBtnVisualizar().setEnabled(status);
     }
-
-    private Produto resgatarProduto() {
-        return null;
-    }
 }
