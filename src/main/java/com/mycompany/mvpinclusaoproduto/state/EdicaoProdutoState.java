@@ -19,6 +19,8 @@ public class EdicaoProdutoState extends ProdutoPresenterState {
 
     private void configuraView() {
         ManterProdutoView view = presenter.getView();
+        view.setTitle("Editar Produto");
+
         view.getBtnSalvar().setVisible(true);
         view.getBtnCancelar().setVisible(true);
 

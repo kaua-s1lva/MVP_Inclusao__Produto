@@ -17,6 +17,7 @@ public class InclusaoProdutoState extends ProdutoPresenterState {
     }
 
     private void configuraView() {
+        presenter.getView().setTitle("Incluir Produto");
         presenter.getView().getBtnCancelar().setVisible(true);
         presenter.getView().getBtnSalvar().setVisible(true);
 

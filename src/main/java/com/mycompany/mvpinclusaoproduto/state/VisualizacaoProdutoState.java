@@ -19,6 +19,8 @@ public class VisualizacaoProdutoState extends ProdutoPresenterState {
 
     private void configuraView() {
         ManterProdutoView view = presenter.getView();
+        view.setTitle("Visualizar Produto");
+        
         view.getBtnEditar().setVisible(true);
         view.getBtnExcluir().setVisible(true);
         view.getBtnFechar().setVisible(true);
