@@ -4,8 +4,7 @@
 
 package com.mycompany.mvpinclusaoproduto;
 
-import com.mycompany.mvpinclusaoproduto.db.ProdutoCollection;
-import com.mycompany.mvpinclusaoproduto.presenter.InclusaoProdutoPresenter;
+import com.mycompany.mvpinclusaoproduto.presenter.PrincipalProdutoPresenter;
 
 /**
  *
@@ -14,7 +13,6 @@ import com.mycompany.mvpinclusaoproduto.presenter.InclusaoProdutoPresenter;
 public class MVPInclusaoProduto {
 
     public static void main(String[] args) {
-        ProdutoCollection produtos = new ProdutoCollection();
-        new InclusaoProdutoPresenter(produtos);
+        new PrincipalProdutoPresenter();
     }
 }
