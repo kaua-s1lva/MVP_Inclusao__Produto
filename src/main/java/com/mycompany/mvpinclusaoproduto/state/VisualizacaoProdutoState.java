@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
+import com.mycompany.mvpinclusaoproduto.model.Produto;
 import com.mycompany.mvpinclusaoproduto.presenter.ManterProdutoPresenter;
 import com.mycompany.mvpinclusaoproduto.view.ManterProdutoView;
 
@@ -13,7 +14,7 @@ public class VisualizacaoProdutoState extends ProdutoPresenterState {
 
     public VisualizacaoProdutoState(ManterProdutoPresenter presenter, int linha) {
         super(presenter);
-        this.linha = linha;
+        this.linha = linha++;
         configuraView();
     }
 
@@ -29,9 +30,11 @@ public class VisualizacaoProdutoState extends ProdutoPresenterState {
         view.getTxtPercentualLucro().setEnabled(false);
         view.getTxtPrecoCusto().setEnabled(false);
 
-        view.getTxtNome().setText(presenter.getProdutos().getProdutos().get(linha).getNome());
-        view.getTxtPercentualLucro().setText(Double.toString(presenter.getProdutos().getProdutos().get(linha).getPercentualLucro()));
-        view.getTxtPrecoCusto().setText(Double.toString(presenter.getProdutos().getProdutos().get(linha).getPrecoCusto()));
+        Produto produto = presenter.getProdutos().buscarPorId(linha);
+
+        view.getTxtNome().setText(produto.getNome());
+        view.getTxtPercentualLucro().setText(Double.toString(produto.getPercentualLucro()));
+        view.getTxtPrecoCusto().setText(Double.toString(produto.getPrecoCusto()));
 
         view.getBtnExcluir().addActionListener(new ActionListener() {
             @Override
@@ -80,6 +83,7 @@ public class VisualizacaoProdutoState extends ProdutoPresenterState {
 
         if (confirmacao == JOptionPane.YES_OPTION) {
             presenter.getProdutos().remover(linha);
+            presenter.getProdutos().notificarObservadores();
             JOptionPane.showMessageDialog(presenter.getView(), "Produto removido com sucesso!", "Remoção", JOptionPane.INFORMATION_MESSAGE);
             presenter.setAllBtnVisibleFalse();
             presenter.getView().dispose();
