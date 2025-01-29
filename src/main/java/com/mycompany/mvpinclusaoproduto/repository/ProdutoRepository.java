@@ -1,13 +1,14 @@
-package com.mycompany.mvpinclusaoproduto.db;
+package com.mycompany.mvpinclusaoproduto.repository;
 
 import java.util.List;
 
+import com.mycompany.mvpinclusaoproduto.dao.ProdutoDAO;
 import com.mycompany.mvpinclusaoproduto.model.Produto;
 
-public class GerenciadorProdutoService {
+public class ProdutoRepository {
     private ProdutoDAO produtoDAO;
 
-    public GerenciadorProdutoService (ProdutoDAO produtoDAO) {
+    public ProdutoRepository (ProdutoDAO produtoDAO) {
         this.produtoDAO = produtoDAO;
     }
 

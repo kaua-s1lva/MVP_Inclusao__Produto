@@ -1,4 +1,4 @@
-package com.mycompany.mvpinclusaoproduto.db;
+package com.mycompany.mvpinclusaoproduto.dao;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.mycompany.mvpinclusaoproduto.presenter;
 
-import com.mycompany.mvpinclusaoproduto.db.ProdutoDAOMySqlite;
+import com.mycompany.mvpinclusaoproduto.dao.ProdutoDAOMySqlite;
 import com.mycompany.mvpinclusaoproduto.model.Produto;
 import com.mycompany.mvpinclusaoproduto.observer.IObserver;
 import com.mycompany.mvpinclusaoproduto.view.PrincipalProdutoView;

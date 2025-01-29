@@ -1,4 +1,4 @@
-package com.mycompany.mvpinclusaoproduto.db;
+package com.mycompany.mvpinclusaoproduto.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,12 +13,15 @@ import com.mycompany.mvpinclusaoproduto.model.Produto;
 import com.mycompany.mvpinclusaoproduto.observer.IObserver;
 import com.mycompany.mvpinclusaoproduto.observer.Observavel;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 public class ProdutoDAOMySqlite extends Observavel implements ProdutoDAO {
     private Connection conexao;
 
     public ProdutoDAOMySqlite () {
         try {
-            String url = "jdbc:sqlite:src/main/java/com/mycompany/mvpinclusaoproduto/db/produtos.db";
+            Dotenv dotenv = Dotenv.load();
+            String url = "jdbc:sqlite:" + dotenv.get("DB_PATH") + dotenv.get("DB_DATABASE") + ".db";
             conexao = DriverManager.getConnection(url);
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao conectar ao banco de dados: " + e.getMessage());
