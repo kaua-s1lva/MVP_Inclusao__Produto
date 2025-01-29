@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
+import com.mycompany.mvpinclusaoproduto.model.Produto;
 import com.mycompany.mvpinclusaoproduto.presenter.ManterProdutoPresenter;
 import com.mycompany.mvpinclusaoproduto.view.ManterProdutoView;
 
@@ -28,9 +29,11 @@ public class EdicaoProdutoState extends ProdutoPresenterState {
         view.getTxtPercentualLucro().setEnabled(true);
         view.getTxtPrecoCusto().setEnabled(true);
 
-        view.getTxtNome().setText(presenter.getProdutos().getProdutos().get(linha).getNome());
-        view.getTxtPercentualLucro().setText(Double.toString(presenter.getProdutos().getProdutos().get(linha).getPercentualLucro()));
-        view.getTxtPrecoCusto().setText(Double.toString(presenter.getProdutos().getProdutos().get(linha).getPrecoCusto()));
+        Produto produto = presenter.getProdutos().buscarPorId(linha);
+
+        view.getTxtNome().setText(produto.getNome());
+        view.getTxtPercentualLucro().setText(Double.toString(produto.getPercentualLucro()));
+        view.getTxtPrecoCusto().setText(Double.toString(produto.getPrecoCusto()));
 
         view.getBtnSalvar().addActionListener(new ActionListener() {
             @Override
@@ -62,9 +65,13 @@ public class EdicaoProdutoState extends ProdutoPresenterState {
         double precoCusto = Double.parseDouble(presenter.getView().getTxtPrecoCusto().getText());
         double percentualLucro = Double.parseDouble(presenter.getView().getTxtPercentualLucro().getText());
 
-        presenter.getProdutos().getProdutos().get(linha).setNome(nome);
-        presenter.getProdutos().getProdutos().get(linha).setPrecoCusto(precoCusto);
-        presenter.getProdutos().getProdutos().get(linha).setPercentualLucro(percentualLucro);
+        Produto produto = new Produto(nome, precoCusto, percentualLucro);
+        produto.setId(linha);
+
+        presenter.getProdutos().atualizar(produto);
+        //presenter.getProdutos().listarTodos().get(linha).setNome(nome);
+        //presenter.getProdutos().listarTodos().get(linha).setPrecoCusto(precoCusto);
+        //presenter.getProdutos().listarTodos().get(linha).setPercentualLucro(percentualLucro);
         
         JOptionPane.showMessageDialog(presenter.getView(), "Produto alterado com sucesso!");
 

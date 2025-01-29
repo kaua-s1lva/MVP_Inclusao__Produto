@@ -1,6 +1,6 @@
 package com.mycompany.mvpinclusaoproduto.presenter;
 
-import com.mycompany.mvpinclusaoproduto.db.ProdutoCollection;
+import com.mycompany.mvpinclusaoproduto.db.ProdutoDAOMySqlite;
 import com.mycompany.mvpinclusaoproduto.state.InclusaoProdutoState;
 import com.mycompany.mvpinclusaoproduto.state.ProdutoPresenterState;
 import com.mycompany.mvpinclusaoproduto.state.VisualizacaoProdutoState;
@@ -8,14 +8,16 @@ import com.mycompany.mvpinclusaoproduto.view.ManterProdutoView;
 
 public class ManterProdutoPresenter {
     private ManterProdutoView view;
-    private ProdutoCollection produtos;
+    //aqui não é possível utilizar a interface por conta do Observer
+    private ProdutoDAOMySqlite produtos;
     private ProdutoPresenterState estado;
 
-    public ManterProdutoPresenter(ProdutoCollection produtos, int linha) {
+    public ManterProdutoPresenter(ProdutoDAOMySqlite produtos, int linha) {
         this.produtos = produtos;
         this.view = new ManterProdutoView();
         this.view.setVisible(false);
 
+        //está correto utilizar esse método?
         setAllBtnVisibleFalse();
 
         if (linha == -1) {
@@ -27,6 +29,7 @@ public class ManterProdutoPresenter {
         this.view.setVisible(true);
     }
 
+    //os métodos aqui não são utilizados de fato? 
     public void salvar () throws Exception{
         estado.salvar();
     }
@@ -47,7 +50,7 @@ public class ManterProdutoPresenter {
         return view;
     }
 
-    public ProdutoCollection getProdutos() {
+    public ProdutoDAOMySqlite getProdutos() {
         return produtos;
     }
 

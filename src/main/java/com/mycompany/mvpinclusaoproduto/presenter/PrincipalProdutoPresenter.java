@@ -1,6 +1,6 @@
 package com.mycompany.mvpinclusaoproduto.presenter;
 
-import com.mycompany.mvpinclusaoproduto.db.ProdutoCollection;
+import com.mycompany.mvpinclusaoproduto.db.ProdutoDAOMySqlite;
 import com.mycompany.mvpinclusaoproduto.model.Produto;
 import com.mycompany.mvpinclusaoproduto.observer.IObserver;
 import com.mycompany.mvpinclusaoproduto.view.PrincipalProdutoView;
@@ -14,17 +14,17 @@ import javax.swing.table.DefaultTableModel;
 
 public class PrincipalProdutoPresenter implements IObserver {
     private PrincipalProdutoView view;
-    private ProdutoCollection produtos;
+    private ProdutoDAOMySqlite produtos;
 
     public PrincipalProdutoPresenter() {
         this.view = new PrincipalProdutoView();
         this.view.setVisible(false);
-        produtos = new ProdutoCollection();
+        produtos = new ProdutoDAOMySqlite();
 
         configuraView();
         atualizar();
         view.setVisible(true);
-        view.getLblTotalItens().setText("0");
+        view.getLblTotalItens().setText(Integer.toString(produtos.listarTodos().size()));
     }
 
     private void configuraView() {
@@ -39,16 +39,16 @@ public class PrincipalProdutoPresenter implements IObserver {
         this.view.getBtnVisualizar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Produto produto = resgatarProduto();
                 int linha = view.getTableProdutos().getSelectedRow();
-                new ManterProdutoPresenter(produtos, linha);
+                int id = (int) view.getTableProdutos().getValueAt(linha, 0);
+                new ManterProdutoPresenter(produtos, id);
             }
         });
 
         this.view.getTableProdutos().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent evt) {
-                setStatusBotaoRemover(true);
+                setStatusBotaoVisualizar(true);
             }
         });
         
@@ -56,15 +56,15 @@ public class PrincipalProdutoPresenter implements IObserver {
 
     @Override
     public void atualizar() {
-        int quantProdutos = produtos.getTotalProdutos();
+        int quantProdutos = produtos.listarTodos().size();
         view.getLblTotalItens().setText(Integer.toString(quantProdutos));
 
         DefaultTableModel dtmProdutos = (DefaultTableModel) view.getTableProdutos().getModel();
         dtmProdutos.setRowCount(0);
 
-        for (int i = 0; i < produtos.getProdutos().size(); i++) {
-            Produto produto = produtos.getProdutos().get(i);
-            Object[] linha = {  i+1, 
+        for (int i = 0; i < produtos.listarTodos().size(); i++) {
+            Produto produto = produtos.listarTodos().get(i);
+            Object[] linha = {  produto.getId(), 
                                 produto.getNome(), 
                                 produto.getPercentualLucro(), 
                                 produto.getPrecoCusto(),
@@ -72,10 +72,10 @@ public class PrincipalProdutoPresenter implements IObserver {
                             };
             dtmProdutos.addRow(linha);
         }
-        setStatusBotaoRemover(false);
+        setStatusBotaoVisualizar(false);
     }
 
-    private void setStatusBotaoRemover(boolean status) {
+    private void setStatusBotaoVisualizar(boolean status) {
         this.view.getBtnVisualizar().setEnabled(status);
     }
 }

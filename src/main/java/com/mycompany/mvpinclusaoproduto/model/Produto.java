@@ -1,6 +1,7 @@
 package com.mycompany.mvpinclusaoproduto.model;
 
 public class Produto {
+    private int id;
     private String nome;
     private double precoCusto;
     private double percentualLucro;
@@ -18,6 +19,10 @@ public class Produto {
     }
 
     // Getters
+    public int getId() {
+        return id;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -49,6 +54,10 @@ public class Produto {
             throw new RuntimeException("Percentual de lucro deve ser maior que zero");
         }
         this.percentualLucro = percentualLucro;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

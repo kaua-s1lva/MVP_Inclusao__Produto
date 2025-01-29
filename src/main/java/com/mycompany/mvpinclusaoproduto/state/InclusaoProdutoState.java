@@ -9,8 +9,6 @@ import com.mycompany.mvpinclusaoproduto.model.Produto;
 import com.mycompany.mvpinclusaoproduto.presenter.ManterProdutoPresenter;
 
 public class InclusaoProdutoState extends ProdutoPresenterState {
-    private Produto produto;
-
     public InclusaoProdutoState(ManterProdutoPresenter presenter) {
         super(presenter);
         configuraView();
@@ -42,6 +40,7 @@ public class InclusaoProdutoState extends ProdutoPresenterState {
 
     @Override
     public void salvar() {
+        //esse método é responsável por validar as informações também, está correto isso?
         String nome = presenter.getView().getTxtNome().getText();
         if (nome == null || nome.isEmpty()) {
             throw new RuntimeException("Nome do produto é obrigatório");
@@ -54,9 +53,9 @@ public class InclusaoProdutoState extends ProdutoPresenterState {
         if (percentualLucro <= 0) {
             throw new RuntimeException("Percentual de lucro deve ser maior que zero");
         }
-        produto = new Produto(nome, precoCusto, percentualLucro);
+        Produto produto = new Produto(nome, precoCusto, percentualLucro);
 
-        presenter.getProdutos().incluir(produto);
+        presenter.getProdutos().inserir(produto);
         presenter.getProdutos().notificarObservadores();
 
         JOptionPane.showMessageDialog(presenter.getView(), "Produto incluído com sucesso!");
