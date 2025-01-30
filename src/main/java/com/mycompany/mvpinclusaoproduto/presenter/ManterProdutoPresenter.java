@@ -2,6 +2,7 @@ package com.mycompany.mvpinclusaoproduto.presenter;
 
 import com.mycompany.mvpinclusaoproduto.dao.ProdutoDAO;
 import com.mycompany.mvpinclusaoproduto.dao.ProdutoDAOMySqlite;
+import com.mycompany.mvpinclusaoproduto.repository.ProdutoRepository;
 import com.mycompany.mvpinclusaoproduto.state.InclusaoProdutoState;
 import com.mycompany.mvpinclusaoproduto.state.ProdutoPresenterState;
 import com.mycompany.mvpinclusaoproduto.state.VisualizacaoProdutoState;
@@ -9,10 +10,11 @@ import com.mycompany.mvpinclusaoproduto.view.ManterProdutoView;
 
 public class ManterProdutoPresenter {
     private ManterProdutoView view;
-    private ProdutoDAO produtos;
+    //private ProdutoDAO produtos;
+    private ProdutoRepository produtos;
     private ProdutoPresenterState estado;
 
-    public ManterProdutoPresenter(ProdutoDAOMySqlite produtos, int linha) {
+    public ManterProdutoPresenter(ProdutoRepository produtos, int linha) {
         this.produtos = produtos;
         this.view = new ManterProdutoView();
         this.view.setVisible(false);
@@ -49,7 +51,7 @@ public class ManterProdutoPresenter {
         return view;
     }
 
-    public ProdutoDAO getProdutos() {
+    public ProdutoRepository getProdutos() {
         return produtos;
     }
 

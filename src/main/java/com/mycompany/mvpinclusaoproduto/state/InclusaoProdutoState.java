@@ -55,8 +55,8 @@ public class InclusaoProdutoState extends ProdutoPresenterState {
         }
         Produto produto = new Produto(nome, precoCusto, percentualLucro);
 
-        presenter.getProdutos().inserir(produto);
-        presenter.getProdutos().notificarObservadores();
+        presenter.getProdutos().adicionarProduto(produto);
+        presenter.getProdutos().getProdutoDAO().notificarObservadores();
 
         JOptionPane.showMessageDialog(presenter.getView(), "Produto incluído com sucesso!");
 

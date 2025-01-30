@@ -31,4 +31,8 @@ public class ProdutoRepository {
     public void removerProduto(int id) {
         produtoDAO.remover(id);
     }
+
+    public ProdutoDAO getProdutoDAO() {
+        return produtoDAO;
+    }
 }

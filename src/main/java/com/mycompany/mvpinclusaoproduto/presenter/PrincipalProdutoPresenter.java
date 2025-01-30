@@ -3,6 +3,7 @@ package com.mycompany.mvpinclusaoproduto.presenter;
 import com.mycompany.mvpinclusaoproduto.dao.ProdutoDAOMySqlite;
 import com.mycompany.mvpinclusaoproduto.model.Produto;
 import com.mycompany.mvpinclusaoproduto.observer.IObserver;
+import com.mycompany.mvpinclusaoproduto.repository.ProdutoRepository;
 import com.mycompany.mvpinclusaoproduto.view.PrincipalProdutoView;
 
 import java.awt.event.ActionEvent;
@@ -14,21 +15,22 @@ import javax.swing.table.DefaultTableModel;
 
 public class PrincipalProdutoPresenter implements IObserver {
     private PrincipalProdutoView view;
-    private ProdutoDAOMySqlite produtos;
+    //private ProdutoDAOMySqlite produtos;
+    private ProdutoRepository produtos;
 
     public PrincipalProdutoPresenter() {
         this.view = new PrincipalProdutoView();
         this.view.setVisible(false);
-        produtos = new ProdutoDAOMySqlite();
+        produtos = new ProdutoRepository(new ProdutoDAOMySqlite());
 
         configuraView();
         atualizar();
         view.setVisible(true);
-        view.getLblTotalItens().setText(Integer.toString(produtos.listarTodos().size()));
+        view.getLblTotalItens().setText(Integer.toString(produtos.listarProdutos().size()));
     }
 
     private void configuraView() {
-        produtos.adicionarObservador(this);
+        produtos.getProdutoDAO().adicionarObservador(this);
         this.view.getBtnNovo().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -56,14 +58,14 @@ public class PrincipalProdutoPresenter implements IObserver {
 
     @Override
     public void atualizar() {
-        int quantProdutos = produtos.listarTodos().size();
+        int quantProdutos = produtos.listarProdutos().size();
         view.getLblTotalItens().setText(Integer.toString(quantProdutos));
 
         DefaultTableModel dtmProdutos = (DefaultTableModel) view.getTableProdutos().getModel();
         dtmProdutos.setRowCount(0);
 
-        for (int i = 0; i < produtos.listarTodos().size(); i++) {
-            Produto produto = produtos.listarTodos().get(i);
+        for (int i = 0; i < produtos.listarProdutos().size(); i++) {
+            Produto produto = produtos.listarProdutos().get(i);
             Object[] linha = {  produto.getId(), 
                                 produto.getNome(), 
                                 produto.getPercentualLucro(), 

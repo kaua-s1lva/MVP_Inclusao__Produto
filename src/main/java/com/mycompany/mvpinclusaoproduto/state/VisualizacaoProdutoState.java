@@ -30,7 +30,7 @@ public class VisualizacaoProdutoState extends ProdutoPresenterState {
         view.getTxtPercentualLucro().setEnabled(false);
         view.getTxtPrecoCusto().setEnabled(false);
 
-        Produto produto = presenter.getProdutos().buscarPorId(linha);
+        Produto produto = presenter.getProdutos().buscarProdutoPorId(linha);
 
         view.getTxtNome().setText(produto.getNome());
         view.getTxtPercentualLucro().setText(Double.toString(produto.getPercentualLucro()));
@@ -82,8 +82,8 @@ public class VisualizacaoProdutoState extends ProdutoPresenterState {
         );
 
         if (confirmacao == JOptionPane.YES_OPTION) {
-            presenter.getProdutos().remover(linha);
-            presenter.getProdutos().notificarObservadores();
+            presenter.getProdutos().removerProduto(linha);
+            presenter.getProdutos().getProdutoDAO().notificarObservadores();
             JOptionPane.showMessageDialog(presenter.getView(), "Produto removido com sucesso!", "Remoção", JOptionPane.INFORMATION_MESSAGE);
             presenter.setAllBtnVisibleFalse();
             presenter.getView().dispose();

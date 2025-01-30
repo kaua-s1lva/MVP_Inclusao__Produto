@@ -29,7 +29,7 @@ public class EdicaoProdutoState extends ProdutoPresenterState {
         view.getTxtPercentualLucro().setEnabled(true);
         view.getTxtPrecoCusto().setEnabled(true);
 
-        Produto produto = presenter.getProdutos().buscarPorId(linha);
+        Produto produto = presenter.getProdutos().buscarProdutoPorId(linha);
 
         view.getTxtNome().setText(produto.getNome());
         view.getTxtPercentualLucro().setText(Double.toString(produto.getPercentualLucro()));
@@ -68,14 +68,14 @@ public class EdicaoProdutoState extends ProdutoPresenterState {
         Produto produto = new Produto(nome, precoCusto, percentualLucro);
         produto.setId(linha);
 
-        presenter.getProdutos().atualizar(produto);
+        presenter.getProdutos().atualizarProduto(produto);
         //presenter.getProdutos().listarTodos().get(linha).setNome(nome);
         //presenter.getProdutos().listarTodos().get(linha).setPrecoCusto(precoCusto);
         //presenter.getProdutos().listarTodos().get(linha).setPercentualLucro(percentualLucro);
         
         JOptionPane.showMessageDialog(presenter.getView(), "Produto alterado com sucesso!");
 
-        presenter.getProdutos().notificarObservadores();
+        presenter.getProdutos().getProdutoDAO().notificarObservadores();
 
         presenter.setAllBtnVisibleFalse();
         presenter.setEstado(new VisualizacaoProdutoState(presenter, linha));
