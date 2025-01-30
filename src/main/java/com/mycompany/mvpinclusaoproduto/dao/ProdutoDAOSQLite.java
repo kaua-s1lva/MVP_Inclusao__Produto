@@ -13,10 +13,10 @@ import com.mycompany.mvpinclusaoproduto.model.Produto;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
-public class ProdutoDAOMySqlite extends ProdutoDAO {
+public class ProdutoDAOSQLite extends ProdutoDAO {
     private Connection conexao;
 
-    public ProdutoDAOMySqlite () {
+    public ProdutoDAOSQLite () {
         try {
             Dotenv dotenv = Dotenv.load();
             String url = "jdbc:sqlite:" + dotenv.get("DB_PATH") + dotenv.get("DB_DATABASE") + ".db";

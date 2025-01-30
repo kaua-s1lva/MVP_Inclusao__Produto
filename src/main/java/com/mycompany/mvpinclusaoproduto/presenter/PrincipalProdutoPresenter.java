@@ -1,6 +1,6 @@
 package com.mycompany.mvpinclusaoproduto.presenter;
 
-import com.mycompany.mvpinclusaoproduto.dao.ProdutoDAOMySqlite;
+import com.mycompany.mvpinclusaoproduto.dao.ProdutoDAOSQLite;
 import com.mycompany.mvpinclusaoproduto.model.Produto;
 import com.mycompany.mvpinclusaoproduto.observer.IObserver;
 import com.mycompany.mvpinclusaoproduto.repository.ProdutoRepository;
@@ -15,13 +15,12 @@ import javax.swing.table.DefaultTableModel;
 
 public class PrincipalProdutoPresenter implements IObserver {
     private PrincipalProdutoView view;
-    //private ProdutoDAOMySqlite produtos;
     private ProdutoRepository produtos;
 
     public PrincipalProdutoPresenter() {
         this.view = new PrincipalProdutoView();
         this.view.setVisible(false);
-        produtos = new ProdutoRepository(new ProdutoDAOMySqlite());
+        produtos = new ProdutoRepository(new ProdutoDAOSQLite());
 
         configuraView();
         atualizar();
