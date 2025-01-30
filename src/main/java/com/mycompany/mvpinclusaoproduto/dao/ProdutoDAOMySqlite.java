@@ -21,6 +21,7 @@ public class ProdutoDAOMySqlite extends ProdutoDAO {
             Dotenv dotenv = Dotenv.load();
             String url = "jdbc:sqlite:" + dotenv.get("DB_PATH") + dotenv.get("DB_DATABASE") + ".db";
             conexao = DriverManager.getConnection(url);
+            criarTabela();
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao conectar ao banco de dados: " + e.getMessage());
         }
@@ -112,6 +113,23 @@ public class ProdutoDAOMySqlite extends ProdutoDAO {
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao remover o produto: " + e.getMessage());
+        }
+    }
+
+    private void criarTabela() {
+        String sql = """
+            CREATE TABLE IF NOT EXISTS produtos (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                nome VARCHAR(999) NOT NULL,
+                precoCusto DECIMAL(5,2),
+                percentualLucro DECIMAL(5,2)
+            );
+        """;
+
+        try (Statement stmt = conexao.createStatement()) {
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro na criação de tabela no banco de dados: " + e.getMessage(), e);
         }
     }
 
