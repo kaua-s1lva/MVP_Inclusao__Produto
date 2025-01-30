@@ -10,12 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mycompany.mvpinclusaoproduto.model.Produto;
-import com.mycompany.mvpinclusaoproduto.observer.IObserver;
-import com.mycompany.mvpinclusaoproduto.observer.Observavel;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
-public class ProdutoDAOMySqlite extends Observavel implements ProdutoDAO {
+public class ProdutoDAOMySqlite extends ProdutoDAO {
     private Connection conexao;
 
     public ProdutoDAOMySqlite () {
@@ -116,42 +114,5 @@ public class ProdutoDAOMySqlite extends Observavel implements ProdutoDAO {
             throw new RuntimeException("Erro ao remover o produto: " + e.getMessage());
         }
     }
-/* 
-    @Override
-    public int getTotalProdutos() {
-        String sql = "SELECT COUNT (*) AS total FROM produtos";
 
-        try (
-            PreparedStatement stmt = conexao.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery(sql)
-        ) {
-            if(rs.next()) {
-                return rs.getInt("total");
-            }
-            return 0;
-            
-        } catch (SQLException e) {
-            throw new RuntimeException("Erro ao contar os produtos: " + e.getMessage());
-        }
-    }
-*/
-    @Override
-    public void adicionarObservador(IObserver observer) {
-        if (this.observers.contains(observer)) {
-            throw new RuntimeException("Não é possível adicionar o mesmo observador");
-        }
-        this.observers.add(observer);
-    }
-
-    @Override
-    public void removerObservador(IObserver observer) {
-        this.observers.remove(observer);
-    }
-
-    @Override
-    public void notificarObservadores() {
-        for (IObserver observer : this.observers) {
-            observer.atualizar();
-        }
-    }
 }
