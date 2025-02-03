@@ -5,16 +5,14 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
-import com.mycompany.mvpinclusaoproduto.model.Produto;
+import com.mycompany.mvpinclusaoproduto.command.CancelarProdutoCommand;
+import com.mycompany.mvpinclusaoproduto.command.ExcluirProdutoCommand;
 import com.mycompany.mvpinclusaoproduto.presenter.ManterProdutoPresenter;
 import com.mycompany.mvpinclusaoproduto.view.ManterProdutoView;
 
 public class VisualizacaoProdutoState extends ProdutoPresenterState {
-    private int linha;
-
-    public VisualizacaoProdutoState(ManterProdutoPresenter presenter, int linha) {
+    public VisualizacaoProdutoState(ManterProdutoPresenter presenter) {
         super(presenter);
-        this.linha = linha++;
         configuraView();
     }
 
@@ -30,11 +28,9 @@ public class VisualizacaoProdutoState extends ProdutoPresenterState {
         view.getTxtPercentualLucro().setEnabled(false);
         view.getTxtPrecoCusto().setEnabled(false);
 
-        Produto produto = presenter.getProdutos().buscarProdutoPorId(linha);
-
-        view.getTxtNome().setText(produto.getNome());
-        view.getTxtPercentualLucro().setText(Double.toString(produto.getPercentualLucro()));
-        view.getTxtPrecoCusto().setText(Double.toString(produto.getPrecoCusto()));
+        view.getTxtNome().setText(presenter.getProduto().getNome());
+        view.getTxtPercentualLucro().setText(Double.toString(presenter.getProduto().getPercentualLucro()));
+        view.getTxtPrecoCusto().setText(Double.toString(presenter.getProduto().getPrecoCusto()));
 
         view.getBtnExcluir().addActionListener(new ActionListener() {
             @Override
@@ -52,7 +48,7 @@ public class VisualizacaoProdutoState extends ProdutoPresenterState {
             public void actionPerformed(ActionEvent e) {
                 try {
                     presenter.setAllBtnVisibleFalse();
-                    presenter.setEstado(new EdicaoProdutoState(presenter, linha));
+                    presenter.setEstado(new EdicaoProdutoState(presenter));
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
@@ -74,25 +70,11 @@ public class VisualizacaoProdutoState extends ProdutoPresenterState {
 
     @Override
     public void excluir() {
-        int confirmacao = JOptionPane.showConfirmDialog(
-            presenter.getView(), 
-            "Tem certeza de que deseja remover o produto selecionado?", 
-            "Confirmação de Remoção", 
-            JOptionPane.YES_NO_OPTION
-        );
-
-        if (confirmacao == JOptionPane.YES_OPTION) {
-            presenter.getProdutos().removerProduto(linha);
-            presenter.getProdutos().getProdutoDAO().notificarObservadores();
-            JOptionPane.showMessageDialog(presenter.getView(), "Produto removido com sucesso!", "Remoção", JOptionPane.INFORMATION_MESSAGE);
-            presenter.setAllBtnVisibleFalse();
-            presenter.getView().dispose();
-        }
+        new ExcluirProdutoCommand().executar(presenter);
     }
 
     @Override
     public void cancelar() {
-        presenter.setAllBtnVisibleFalse();
-        presenter.getView().dispose();
+        new CancelarProdutoCommand().executar(presenter);
     }
 }

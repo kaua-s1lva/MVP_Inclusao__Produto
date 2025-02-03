@@ -10,11 +10,8 @@ import com.mycompany.mvpinclusaoproduto.presenter.ManterProdutoPresenter;
 import com.mycompany.mvpinclusaoproduto.view.ManterProdutoView;
 
 public class EdicaoProdutoState extends ProdutoPresenterState {
-    private int linha;
-
-    public EdicaoProdutoState(ManterProdutoPresenter presenter, int linha) {
+    public EdicaoProdutoState(ManterProdutoPresenter presenter) {
         super(presenter);
-        this.linha = linha;
         configuraView();
     }
 
@@ -29,11 +26,11 @@ public class EdicaoProdutoState extends ProdutoPresenterState {
         view.getTxtPercentualLucro().setEnabled(true);
         view.getTxtPrecoCusto().setEnabled(true);
 
-        Produto produto = presenter.getProdutos().buscarProdutoPorId(linha);
+        //Produto produto = presenter.getProdutos().buscarProdutoPorId(linha);
 
-        view.getTxtNome().setText(produto.getNome());
-        view.getTxtPercentualLucro().setText(Double.toString(produto.getPercentualLucro()));
-        view.getTxtPrecoCusto().setText(Double.toString(produto.getPrecoCusto()));
+        view.getTxtNome().setText(presenter.getProduto().getNome());
+        view.getTxtPercentualLucro().setText(Double.toString(presenter.getProduto().getPercentualLucro()));
+        view.getTxtPrecoCusto().setText(Double.toString(presenter.getProduto().getPrecoCusto()));
 
         view.getBtnSalvar().addActionListener(new ActionListener() {
             @Override
@@ -65,25 +62,24 @@ public class EdicaoProdutoState extends ProdutoPresenterState {
         double precoCusto = Double.parseDouble(presenter.getView().getTxtPrecoCusto().getText());
         double percentualLucro = Double.parseDouble(presenter.getView().getTxtPercentualLucro().getText());
 
-        Produto produto = new Produto(nome, precoCusto, percentualLucro);
-        produto.setId(linha);
+        Produto produto = presenter.getProduto();
+        produto.setNome(nome);
+        produto.setPrecoCusto(precoCusto);
+        produto.setPercentualLucro(percentualLucro);
 
         presenter.getProdutos().atualizarProduto(produto);
-        //presenter.getProdutos().listarTodos().get(linha).setNome(nome);
-        //presenter.getProdutos().listarTodos().get(linha).setPrecoCusto(precoCusto);
-        //presenter.getProdutos().listarTodos().get(linha).setPercentualLucro(percentualLucro);
         
         JOptionPane.showMessageDialog(presenter.getView(), "Produto alterado com sucesso!");
 
         presenter.getProdutos().getProdutoDAO().notificarObservadores();
 
         presenter.setAllBtnVisibleFalse();
-        presenter.setEstado(new VisualizacaoProdutoState(presenter, linha));
+        presenter.setEstado(new VisualizacaoProdutoState(presenter));
     }
 
     @Override
     public void cancelar() {
         presenter.setAllBtnVisibleFalse();
-        presenter.setEstado(new VisualizacaoProdutoState(presenter, linha));
+        presenter.setEstado(new VisualizacaoProdutoState(presenter));
     }
 }

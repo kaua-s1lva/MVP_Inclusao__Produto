@@ -7,11 +7,25 @@ public class Produto {
     private double percentualLucro;
     private double precoVenda;
 
-    public Produto(String nome, double precoCusto, double percentualLucro) {
+    public Produto(int id, String nome, double precoCusto, double percentualLucro) {
+        validaProduto(nome, precoCusto, percentualLucro);
+        this.id = id;
         this.nome = nome;
         this.precoCusto = precoCusto;
         this.percentualLucro = percentualLucro;
         this.precoVenda = calcularPrecoVenda();
+    }
+
+    private void validaProduto(String nome, double precoCusto, double percentualLucro) {
+        if (nome == null || nome.isEmpty()) {
+            throw new RuntimeException("Nome do produto é obrigatório");
+        }
+        if (precoCusto  <= 0) {
+            throw new RuntimeException("Preço de custo deve ser maior que zero");
+        }
+        if (percentualLucro <= 0) {
+            throw new RuntimeException("Percentual de lucro deve ser maior que zero");
+        }
     }
 
     public double calcularPrecoVenda() {
@@ -56,13 +70,9 @@ public class Produto {
         this.percentualLucro = percentualLucro;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     @Override
     public String toString() {
-        return "Produto{" + "nome=" + nome + ", precoCusto=" + precoCusto + ", percentualLucro=" + percentualLucro + ", precoVenda=" + precoVenda + '}';
+        return "Produto{" + "nome=" + nome + ", precoCusto=" + precoCusto + ", percentualLucro=" + percentualLucro + ", precoVenda=" + precoVenda + ", id=" + id + '}';
     }
 
     

@@ -5,7 +5,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
-import com.mycompany.mvpinclusaoproduto.model.Produto;
+import com.mycompany.mvpinclusaoproduto.command.CancelarProdutoCommand;
+import com.mycompany.mvpinclusaoproduto.command.SalvarProdutoCommand;
 import com.mycompany.mvpinclusaoproduto.presenter.ManterProdutoPresenter;
 
 public class InclusaoProdutoState extends ProdutoPresenterState {
@@ -40,33 +41,11 @@ public class InclusaoProdutoState extends ProdutoPresenterState {
 
     @Override
     public void salvar() {
-        //esse método é responsável por validar as informações também, está correto isso?
-        String nome = presenter.getView().getTxtNome().getText();
-        if (nome == null || nome.isEmpty()) {
-            throw new RuntimeException("Nome do produto é obrigatório");
-        }
-        double precoCusto = Double.parseDouble(presenter.getView().getTxtPrecoCusto().getText());
-        if (precoCusto  <= 0) {
-            throw new RuntimeException("Preço de custo deve ser maior que zero");
-        }
-        double percentualLucro = Double.parseDouble(presenter.getView().getTxtPercentualLucro().getText());
-        if (percentualLucro <= 0) {
-            throw new RuntimeException("Percentual de lucro deve ser maior que zero");
-        }
-        Produto produto = new Produto(nome, precoCusto, percentualLucro);
-
-        presenter.getProdutos().adicionarProduto(produto);
-        presenter.getProdutos().getProdutoDAO().notificarObservadores();
-
-        JOptionPane.showMessageDialog(presenter.getView(), "Produto incluído com sucesso!");
-
-        presenter.setAllBtnVisibleFalse();
-        presenter.getView().dispose();
+        new SalvarProdutoCommand().executar(presenter);
     }
 
     @Override
     public void cancelar() {
-        presenter.setAllBtnVisibleFalse();
-        presenter.getView().dispose();
+        new CancelarProdutoCommand().executar(presenter);
     }
 }

@@ -33,7 +33,7 @@ public class PrincipalProdutoPresenter implements IObserver {
         this.view.getBtnNovo().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ManterProdutoPresenter(produtos, -1);
+                new ManterProdutoPresenter(produtos, null);
             }
         });
 
@@ -42,7 +42,9 @@ public class PrincipalProdutoPresenter implements IObserver {
             public void actionPerformed(ActionEvent e) {
                 int linha = view.getTableProdutos().getSelectedRow();
                 int id = (int) view.getTableProdutos().getValueAt(linha, 0);
-                new ManterProdutoPresenter(produtos, id);
+
+                Produto produto = produtos.buscarProdutoPorId(id);
+                new ManterProdutoPresenter(produtos, produto);
             }
         });
 

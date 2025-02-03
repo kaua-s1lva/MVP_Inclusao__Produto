@@ -50,6 +50,7 @@ public class ProdutoDAOSQLite extends ProdutoDAO {
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     Produto produto = new Produto(
+                                    rs.getInt("id"),
                                     rs.getString("nome"), 
                                     rs.getDouble("precoCusto"), 
                                     rs.getDouble("percentualLucro")
@@ -75,11 +76,11 @@ public class ProdutoDAOSQLite extends ProdutoDAO {
         ) {
             while (rs.next()) {
                 Produto produto = new Produto(
+                                        rs.getInt("id"),
                                         rs.getString("nome"), 
                                         rs.getDouble("precoCusto"), 
                                         rs.getDouble("percentualLucro")
                 );
-                produto.setId(rs.getInt("id"));
                 produtos.add(produto);
             }
         } catch (SQLException e) {
