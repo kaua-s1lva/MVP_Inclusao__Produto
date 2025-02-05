@@ -9,19 +9,19 @@ import com.mycompany.mvpinclusaoproduto.view.ManterProdutoView;
 
 public class ManterProdutoPresenter {
     private ManterProdutoView view;
-    private ProdutoRepository produtos;
-    private Produto produto;
+    private ProdutoRepository repository;
+    private Produto produtoSelecionado;
     private ProdutoPresenterState estado;
 
-    public ManterProdutoPresenter(ProdutoRepository produtos, Produto produto) {
-        this.produtos = produtos;
-        this.produto = produto;
+    public ManterProdutoPresenter(ProdutoRepository repository, Produto produtoSelecionado) {
+        this.repository = repository;
+        this.produtoSelecionado = produtoSelecionado;
         this.view = new ManterProdutoView();
         this.view.setVisible(false);
 
         setAllBtnVisibleFalse();
 
-        if (produto == null) {
+        if (produtoSelecionado == null) {
             this.estado = new InclusaoProdutoState(this);
         } else {
             this.estado = new VisualizacaoProdutoState(this);
@@ -51,12 +51,12 @@ public class ManterProdutoPresenter {
         return view;
     }
 
-    public ProdutoRepository getProdutos() {
-        return produtos;
+    public ProdutoRepository getProdutosRepository() {
+        return repository;
     }
 
-    public Produto getProduto() {
-        return produto;
+    public Produto getProdutoSelecionado() {
+        return produtoSelecionado;
     }
 
     public void setEstado(ProdutoPresenterState estado) {

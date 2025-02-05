@@ -15,25 +15,25 @@ import javax.swing.table.DefaultTableModel;
 
 public class PrincipalProdutoPresenter implements IObserver {
     private PrincipalProdutoView view;
-    private ProdutoRepository produtos;
+    private ProdutoRepository repository;
 
     public PrincipalProdutoPresenter() {
         this.view = new PrincipalProdutoView();
         this.view.setVisible(false);
-        produtos = new ProdutoRepository(new ProdutoDAOSQLite());
+        repository = new ProdutoRepository(new ProdutoDAOSQLite());
 
         configuraView();
         atualizar();
         view.setVisible(true);
-        view.getLblTotalItens().setText(Integer.toString(produtos.listarProdutos().size()));
+        view.getLblTotalItens().setText(Integer.toString(repository.listarProdutos().size()));
     }
 
     private void configuraView() {
-        produtos.getProdutoDAO().adicionarObservador(this);
+        repository.getProdutoDAO().adicionarObservador(this);
         this.view.getBtnNovo().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ManterProdutoPresenter(produtos, null);
+                new ManterProdutoPresenter(repository, null);
             }
         });
 
@@ -43,8 +43,8 @@ public class PrincipalProdutoPresenter implements IObserver {
                 int linha = view.getTableProdutos().getSelectedRow();
                 int id = (int) view.getTableProdutos().getValueAt(linha, 0);
 
-                Produto produto = produtos.buscarProdutoPorId(id);
-                new ManterProdutoPresenter(produtos, produto);
+                Produto produtoSelecionado = repository.buscarProdutoPorId(id);
+                new ManterProdutoPresenter(repository, produtoSelecionado);
             }
         });
 
@@ -59,14 +59,14 @@ public class PrincipalProdutoPresenter implements IObserver {
 
     @Override
     public void atualizar() {
-        int quantProdutos = produtos.listarProdutos().size();
+        int quantProdutos = repository.listarProdutos().size();
         view.getLblTotalItens().setText(Integer.toString(quantProdutos));
 
         DefaultTableModel dtmProdutos = (DefaultTableModel) view.getTableProdutos().getModel();
         dtmProdutos.setRowCount(0);
 
-        for (int i = 0; i < produtos.listarProdutos().size(); i++) {
-            Produto produto = produtos.listarProdutos().get(i);
+        for (int i = 0; i < repository.listarProdutos().size(); i++) {
+            Produto produto = repository.listarProdutos().get(i);
             Object[] linha = {  produto.getId(), 
                                 produto.getNome(), 
                                 produto.getPercentualLucro(), 

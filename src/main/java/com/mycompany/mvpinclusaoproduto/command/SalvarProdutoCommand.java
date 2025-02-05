@@ -13,26 +13,26 @@ public class SalvarProdutoCommand implements IProdutoPresenterCommand {
         double precoCusto = Double.parseDouble(presenter.getView().getTxtPrecoCusto().getText());
         double percentualLucro = Double.parseDouble(presenter.getView().getTxtPercentualLucro().getText());
 
-        if(presenter.getProduto() == null) {
+        if(presenter.getProdutoSelecionado() == null) {
             Produto produto = new Produto(0, nome, precoCusto, percentualLucro);
 
-            presenter.getProdutos().adicionarProduto(produto);
-            presenter.getProdutos().getProdutoDAO().notificarObservadores();
+            presenter.getProdutosRepository().adicionarProduto(produto);
+            presenter.getProdutosRepository().getProdutoDAO().notificarObservadores();
     
             JOptionPane.showMessageDialog(presenter.getView(), "Produto incluído com sucesso!");
 
             presenter.getView().dispose();
         } else {
-            Produto produto = presenter.getProduto();
+            Produto produto = presenter.getProdutoSelecionado();
             produto.setNome(nome);
             produto.setPrecoCusto(precoCusto);
             produto.setPercentualLucro(percentualLucro);
 
-            presenter.getProdutos().atualizarProduto(produto);
+            presenter.getProdutosRepository().atualizarProduto(produto);
             
             JOptionPane.showMessageDialog(presenter.getView(), "Produto alterado com sucesso!");
 
-            presenter.getProdutos().getProdutoDAO().notificarObservadores();
+            presenter.getProdutosRepository().getProdutoDAO().notificarObservadores();
 
             presenter.setEstado(new VisualizacaoProdutoState(presenter));
         }

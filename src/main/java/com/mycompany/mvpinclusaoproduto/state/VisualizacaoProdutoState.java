@@ -28,9 +28,9 @@ public class VisualizacaoProdutoState extends ProdutoPresenterState {
         view.getTxtPercentualLucro().setEnabled(false);
         view.getTxtPrecoCusto().setEnabled(false);
 
-        view.getTxtNome().setText(presenter.getProduto().getNome());
-        view.getTxtPercentualLucro().setText(Double.toString(presenter.getProduto().getPercentualLucro()));
-        view.getTxtPrecoCusto().setText(Double.toString(presenter.getProduto().getPrecoCusto()));
+        view.getTxtNome().setText(presenter.getProdutoSelecionado().getNome());
+        view.getTxtPercentualLucro().setText(Double.toString(presenter.getProdutoSelecionado().getPercentualLucro()));
+        view.getTxtPrecoCusto().setText(Double.toString(presenter.getProdutoSelecionado().getPrecoCusto()));
 
         view.getBtnExcluir().addActionListener(new ActionListener() {
             @Override

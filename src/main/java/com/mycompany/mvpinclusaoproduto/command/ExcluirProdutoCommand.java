@@ -15,8 +15,8 @@ public class ExcluirProdutoCommand implements IProdutoPresenterCommand {
         );
 
         if (confirmacao == JOptionPane.YES_OPTION) {
-            presenter.getProdutos().removerProduto(presenter.getProduto().getId());
-            presenter.getProdutos().getProdutoDAO().notificarObservadores();
+            presenter.getProdutosRepository().removerProduto(presenter.getProdutoSelecionado().getId());
+            presenter.getProdutosRepository().getProdutoDAO().notificarObservadores();
             JOptionPane.showMessageDialog(presenter.getView(), "Produto removido com sucesso!", "Remoção", JOptionPane.INFORMATION_MESSAGE);
             presenter.setAllBtnVisibleFalse();
             presenter.getView().dispose();
