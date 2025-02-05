@@ -1,7 +1,6 @@
 package com.mycompany.mvpinclusaoproduto.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,19 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mycompany.mvpinclusaoproduto.model.Produto;
-
-import io.github.cdimascio.dotenv.Dotenv;
+import com.mycompany.mvpinclusaoproduto.singleton.ConexaoSingleton;
 
 public class ProdutoDAOSQLite extends ProdutoDAO {
     private Connection conexao;
 
     public ProdutoDAOSQLite () {
         try {
-            Dotenv dotenv = Dotenv.load();
-            String url = "jdbc:sqlite:" + dotenv.get("DB_PATH") + dotenv.get("DB_DATABASE") + ".db";
-            conexao = DriverManager.getConnection(url);
+            conexao = ConexaoSingleton.getInstancia().getConexao();
             criarTabela();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new RuntimeException("Erro ao conectar ao banco de dados: " + e.getMessage());
         }
     }
